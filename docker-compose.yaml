@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  challenge-postgres:
+    image: postgres:15-alpine
+    container_name: be-challenge-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=be_challenge
+    ports:
+      - 5432:5432
+    volumes:
+      - be-challenge-volume:/var/lib/postgresql/data
+    networks:
+      - be-challenge-net
+
+  challenge-app:
+    build:
+      context: .
+      dockerfile: ./deployments/Dockerfile
+    container_name: be-challenge
+    environment:
+      - APP_PORT=8080
+      - POSTGRES_URL=postgresql://postgres:password@challenge-postgres:5432/be_challenge
+    ports:
+      - 8080:8080
+    networks:
+      - be-challenge-net
+    depends_on:
+      - challenge-postgres
+    restart: on-failure
+
+networks:
+  be-challenge-net:
+    driver: bridge
+
+volumes:
+  be-challenge-volume:
