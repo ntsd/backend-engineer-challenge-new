@@ -40,7 +40,7 @@ func (s *scanner) scan(logger *logrus.Entry, scan model.Scan) (model.Findings, e
 
 	finding := model.Findings{}
 
-	scanRegex := regexp.MustCompile(`\s(?P<key>(private_key|public_key)(\w+|\s))`)
+	scanRegex := regexp.MustCompile(`(?P<key>((private_key|public_key)\w+)|(private_key|public_key))`)
 	if err := files.ForEach(func(f *object.File) error {
 		// skip binary files
 		isBin, err := f.IsBinary()
