@@ -2,6 +2,8 @@
 
 ## API Architecture
 
+Note: for Mermaid you may need a [Mermaid viewer](https://mermaid.live), by Default Github will render mermaid on Markdown.
+
 ```mermaid
 C4Component
     title API Architecture
@@ -165,16 +167,16 @@ possible http status and error message
 
 Git repository object. the URL need to be unique
 
-*Note: only the Get Repository endpoint will allow to query the scan results for performance purpose
+\*Note: only the Get Repository endpoint will allow to query the scan results for performance purpose
 
-| field     | type            | description                                                                  |
-| --------- | --------------- | ---------------------------------------------------------------------------- |
-| id        | text            | id of the repository                                                         |
-| name      | text            | name of the repository                                                       |
-| url       | text            | url of the repository                                                        |
-| createdAt | time            | the created time of the repository                                           |
-| updatedAt | time            | the latest updated time of the repository                                    |
-| scans     | [[Scan](#Scan)] | scan list of the repository, you can only get by get one repository endpoint |
+| field     | type            | description                               |
+| --------- | --------------- | ----------------------------------------- |
+| id        | text            | id of the repository                      |
+| name      | text            | name of the repository                    |
+| url       | text            | url of the repository                     |
+| createdAt | time            | the created time of the repository        |
+| updatedAt | time            | the latest updated time of the repository |
+| scans     | [[Scan](#Scan)] | scan list of the repository               |
 
 #### Scan
 
@@ -217,7 +219,6 @@ Request body
 | name  | text | name of the repository |
 | url   | text | url of the repository  |
 
-
 Response: [Repository](#Repository)
 
 Example
@@ -237,7 +238,7 @@ an endpoint to list all repositories
 
 `GET /repositories`
 
-Response: array of [Repository](#Repository)
+Response: array of [Repository](#Repository), this endpoint will not response `scans` for performance purpose.
 
 Example
 
@@ -247,11 +248,11 @@ curl http://localhost:8080/repositories
 
 #### Get Repository
 
-get one repository, this will allow to get the scan results
+get one repository
 
 `GET /repositories/:repositoryID`
 
-Response: [Repository](#Repository) include list of [Scan](#Scan)
+Response: [Repository](#Repository)
 
 Example
 
@@ -272,7 +273,7 @@ Request body
 | name  | text | name of the repository |
 | url   | text | url of the repository  |
 
-Response: an updated [Repository](#Repository)
+Response: an updated [Repository](#Repository), this endpoint will not response `scans`.
 
 Example
 
